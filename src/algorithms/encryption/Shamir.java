@@ -1,6 +1,7 @@
 package algorithms.encryption;
 
 import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -8,10 +9,6 @@ import java.security.SecureRandom;
 import algorithms.cryptosys_public_key.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.io.FileInputStream;
-import java.io.File;
-import java.lang.Object;
-
 
 
 public class Shamir {
@@ -56,10 +53,6 @@ public class Shamir {
         System.out.println("Random C: " + C_);
         System.out.println("Random D: " + D_);
     }
-    /*public void calculateValue( String filePath, in)
-    {
-
-    }*/
 
     public long getC() {
         return C_;
@@ -80,15 +73,6 @@ public class Shamir {
         {
             buffer = new byte[fin.available()];
             fin.read(buffer, 0, buffer.length);
-
-            System.out.print("(");
-            for(byte i: buffer)
-            {
-                System.out.print(i + " ");
-            }
-            System.out.print(")");
-            System.out.println();
-
         }
         catch(IOException ex){
             System.out.println(ex.getMessage());
@@ -100,12 +84,6 @@ public class Shamir {
     {
         try(FileOutputStream fos=new FileOutputStream(path))
         {
-            System.out.print("(");
-            for(byte i: buffer)
-            {
-                System.out.print(i + " ");
-            }
-            System.out.print(")");
             fos.write(buffer, 0, buffer.length);
         }
         catch(IOException ex){
