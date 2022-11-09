@@ -4,13 +4,12 @@ import java.util.List;
 
 public class MainElgamal {
     public static void main(String[] args) {
-        Elgamal el = new Elgamal();
-        System.out.println("P = " + el.getP());
-        System.out.println("G = " + el.getG());
-        List<Long> massage= el.calculateSendMassage("Example/testPic.png", 454444785);
-        for( Long i: massage)
-        {
-            System.out.print(i + " ");
-        }
+        Elgamal.setInitialValues();
+
+        Elgamal elA = new Elgamal();
+        Elgamal elB = new Elgamal();
+
+        List<Long> massage= elA.calculateSendMassage("Example/testPic.png", elB.getD());
+        elB.calculateReceiveMassage(elA.getR(), massage, "Example/newTestPic.png");
     }
 }
