@@ -52,7 +52,7 @@ public class RSA {
             E.add(PowFast.calculate(b, D, N));
         }
         byte[] arrayBytes = FileBytes.longToBytes(E);
-        Shamir.getFileFromBytes(pathNewFile, arrayBytes);
+        FileBytes.getFileFromBytes(pathNewFile, arrayBytes);
     }
 
     public void receiveMessage(String path, String newPath) throws IOException {
