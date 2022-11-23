@@ -3,6 +3,7 @@ package algorithms.encryption;
 import algorithms.cryptosys_public_key.PowFast;
 import algorithms.cryptosys_public_key.Prime;
 import algorithms.cryptosys_public_key.Euclid;
+import functionalfiles.FileBytes;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -44,26 +45,25 @@ public class RSA {
         } while(D*C%(phi) != 1);
     }
 
-    public List<Long> sendMessage(String path, long D, long N) throws IOException {
-        byte[] byteArray = Shamir.getBytesFromFile(path);
-
+    public void sendMessage(String pathExistingFile, String pathNewFile, long D, long N) throws IOException {
+        byte[] byteArray = FileBytes.getBytesFromFile(pathExistingFile);
         List<Long> E = new ArrayList<>();
-
         for (byte b : byteArray) {
             E.add(PowFast.calculate(b, D, N));
         }
-        return E;
+        byte[] arrayBytes = FileBytes.longToBytes(E);
+        Shamir.getFileFromBytes(pathNewFile, arrayBytes);
     }
 
-    public void receiveMessage(List<Long> E, String path) throws IOException {
+    public void receiveMessage(String path, String newPath) throws IOException {
+        byte[] buffer = FileBytes.getBytesFromFile(path);
+        List<Long> E = FileBytes.bytesToLong(buffer);
         byte [] result = new byte[E.size()];
-
         for (int i = 0; i < E.size(); i++) {
             result[i] = (byte) PowFast.calculate(E.get(i), getC(), getN());
         }
-        Shamir.getFileFromBytes(path, result);
+        FileBytes.getFileFromBytes(newPath, result);
     }
-
     public long getN() {
         return N;
     }
