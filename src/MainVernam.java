@@ -9,8 +9,8 @@ public class MainVernam {
 
         try
         {
-            byte[] buffer = A.encryptFile("Example/img.png");
-            B.decryptFile("Example/newImgPic.png", buffer, A.getSecretKey());
+            A.encryptFile("Example/img.png", "result/encryption/Verman/intermediateTestPic.png");
+            B.decryptFile("result/encryption/Verman/intermediateTestPic.png", "result/encryption/Verman/TestPic.png", A.getSecretKey());
 
         }
         catch (IOException ex)
