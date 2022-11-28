@@ -1,7 +1,5 @@
 import algorithms.encryption.Elgamal;
 
-import java.util.List;
-
 public class MainElgamal {
     public static void main(String[] args) {
         Elgamal.setInitialValues();
@@ -9,7 +7,7 @@ public class MainElgamal {
         Elgamal elA = new Elgamal();
         Elgamal elB = new Elgamal();
 
-        List<Long> massage= elA.calculateSendMassage("Example/testPic.png", elB.getD());
-        elB.calculateReceiveMassage(elA.getR(), massage, "Example/newTestPic.png");
+        elA.calculateSendMassage("Example/img.png","result/encryption/Elgamal/intermediateImg.png", elB.getD());
+        elB.calculateReceiveMassage("result/encryption/Elgamal/intermediateImg.png", "result/encryption/Elgamal/newImg.png", elA.getR());
     }
 }

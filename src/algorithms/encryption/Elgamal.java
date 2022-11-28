@@ -2,6 +2,7 @@ package algorithms.encryption;
 
 import algorithms.cryptosys_public_key.DiffieHellman;
 import algorithms.cryptosys_public_key.PowFast;
+import functionalfiles.FileBytes;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class Elgamal {
         D = PowFast.calculate(G, C, P);
     }
 
-    public List<Long> calculateSendMassage(String path, long publicKeyD)
+    public void calculateSendMassage(String pathExistingFile, String pathNewFile, long publicKeyD)
     {
         List<Long> E = new ArrayList<>();
 
@@ -42,22 +43,25 @@ public class Elgamal {
         long intermediateValue = PowFast.calculate(publicKeyD, K, P);
 
 
-        byte[] byteArray = Shamir.getBytesFromFile(path);
+        byte[] byteArray = Shamir.getBytesFromFile(pathExistingFile);
 
         for (byte a : byteArray) {
             E.add(PowFast.calculate(a * intermediateValue, 1, P));
         }
-        return E;
+        byte[] arrayBytes = FileBytes.longToBytes(E);
+        FileBytes.getFileFromBytes(pathNewFile, arrayBytes);
     }
-    public void calculateReceiveMassage(long R, List<Long> E, String path)
+    public void calculateReceiveMassage(String path, String newPath, long R)
     {
+        byte[] array = FileBytes.getBytesFromFile(path);
+        List<Long> E = FileBytes.bytesToLong(array);
         byte[] buffer = new byte[E.size()];
         long intermediateValue = PowFast.calculate(R,P - 1 - C, P);
 
         for (int i = 0; i < E.size(); i++) {
             buffer[i] = (byte) PowFast.calculate(E.get(i) * intermediateValue, 1, getP());
         }
-        Shamir.getFileFromBytes(path,buffer);
+        Shamir.getFileFromBytes(newPath,buffer);
     }
 
 
