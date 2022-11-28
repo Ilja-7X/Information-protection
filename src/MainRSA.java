@@ -9,8 +9,8 @@ public class MainRSA {
         RSA B = new RSA();
         try
         {
-            A.sendMessage("Example/img.png","Result/intermediateTestPic.png", B.getD(), B.getN());
-            B.receiveMessage("Result/intermediateTestPic.png", "Result/newTestPic.png");
+            A.sendMessage("Example/img.png","Result/encryption/RSA/intermediateTestPic.png", B.getD(), B.getN());
+            B.receiveMessage("Result/encryption/RSA/intermediateTestPic.png", "Result/encryption/RSA/newTestPic.png");
         }
         catch (IOException ex)
         {
