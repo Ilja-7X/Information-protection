@@ -61,4 +61,21 @@ public class FileBytes {
         DataInputStream inputStream = new DataInputStream(new FileInputStream(path));
         return inputStream.readLong();
     }
+
+    public static void writeLongToFile(String path, List<Long> numsWrite) throws IOException {
+        DataOutputStream dos = new DataOutputStream(new FileOutputStream(path));
+        for(Long a: numsWrite)
+        {
+            dos.writeLong(a);
+        }
+    }
+
+    public static List<Long> readLongToFile(String path) throws IOException {
+        DataInputStream inputStream = new DataInputStream(new FileInputStream(path));
+        List<Long> numsRead = new ArrayList<>();
+        for(int i = 0; i < 2; i++) {
+            numsRead.add(inputStream.readLong());
+        }
+        return numsRead;
+    }
 }
