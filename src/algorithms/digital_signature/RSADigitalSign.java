@@ -3,10 +3,10 @@ package algorithms.digital_signature;
 import algorithms.cryptosys_public_key.PowFast;
 import algorithms.encryption.RSA;
 
+import functionalfiles.FileBytes;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.*;
-import java.io.DataOutputStream;
 import java.math.BigInteger;
 
 public class RSADigitalSign {
@@ -28,7 +28,7 @@ public class RSADigitalSign {
         hash = hash.mod(new BigInteger(String.valueOf(N)));
 
         long S = PowFast.calculate(hash.longValue(), C, N);
-        writeToFile(newPath, S);
+        FileBytes.writeToFile(newPath, S);
     }
     public void checkSign(String pathFile, String pathSignFile, long D, long N) throws IOException {
         String checksum = DigestUtils.md5Hex(new FileInputStream(pathFile));
@@ -37,7 +37,7 @@ public class RSADigitalSign {
         System.out.println("Hash = " + hash.longValue());
 
 
-        long S = readToFile(pathSignFile);
+        long S = FileBytes.readToFile(pathSignFile);
 
         long w = PowFast.calculate(S, D, N);
         System.out.println("Сalculated value = " + w);
@@ -48,17 +48,6 @@ public class RSADigitalSign {
         else
             System.out.println("Note: digital signature RSA is valid");
     }
-
-    public static void writeToFile(String path, long numWrite) throws IOException {
-        DataOutputStream dos = new DataOutputStream(new FileOutputStream(path));
-        dos.writeLong(numWrite);
-    }
-
-    public static long readToFile(String path) throws IOException {
-        DataInputStream inputStream = new DataInputStream(new FileInputStream(path));
-        return inputStream.readLong();
-    }
-
 
 
     public long getN() {

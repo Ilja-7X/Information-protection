@@ -1,8 +1,6 @@
 package functionalfiles;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,5 +50,15 @@ public class FileBytes {
             E.add(buffer.getLong());
         }
         return E;
+    }
+
+    public static void writeToFile(String path, long numWrite) throws IOException {
+        DataOutputStream dos = new DataOutputStream(new FileOutputStream(path));
+        dos.writeLong(numWrite);
+    }
+
+    public static long readToFile(String path) throws IOException {
+        DataInputStream inputStream = new DataInputStream(new FileInputStream(path));
+        return inputStream.readLong();
     }
 }
