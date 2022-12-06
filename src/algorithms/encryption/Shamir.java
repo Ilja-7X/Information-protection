@@ -7,6 +7,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import algorithms.cryptosys_public_key.*;
+import functionalfiles.FileBytes;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -92,7 +94,11 @@ public class Shamir {
         }
     }
 
-    public List<Long> ShamirCalcIteration(String path, List<Long> prevX, int numOfIteration) throws IOException {
+    public void ShamirCalcIteration(String path, String newPath, int numOfIteration) throws IOException {
+        byte[] arrayBytes;
+        byte[] buffer;
+        List<Long> E;
+
         switch (numOfIteration) {
             case 1:
                 byte[] byteArray = getBytesFromFile(path);
@@ -102,27 +108,34 @@ public class Shamir {
                     //System.out.print(a + " ");
                     x1.add(PowFast.calculate(a, getC(), getP()));
                 }
-                return x1;
+                arrayBytes = FileBytes.longToBytes(x1);
+                FileBytes.getFileFromBytes(newPath, arrayBytes);
             case 2:
+                buffer = FileBytes.getBytesFromFile(path);
+                E = FileBytes.bytesToLong(buffer);
                 List<Long> x2 = new ArrayList<>();
-                for (Long a : prevX) {
+                for (Long a : E) {
                     x2.add(PowFast.calculate(a, getC(), getP()));
                 }
-                return x2;
+                arrayBytes = FileBytes.longToBytes(x2);
+                FileBytes.getFileFromBytes(newPath, arrayBytes);
             case 3:
+                buffer = FileBytes.getBytesFromFile(path);
+                E = FileBytes.bytesToLong(buffer);
                 List<Long> x3 = new ArrayList<>();
-                for (Long a : prevX) {
+                for (Long a : E) {
                     x3.add(PowFast.calculate(a, getD(), getP()));
                 }
-                return x3;
+                arrayBytes = FileBytes.longToBytes(x3);
+                FileBytes.getFileFromBytes(newPath, arrayBytes);
             case 4:
-                byte[] outFile = new byte[prevX.size()];
-                for (int i = 0; i < prevX.size(); i++) {
-                    outFile[i] = (byte) PowFast.calculate(prevX.get(i), getD(), getP());
+                buffer = FileBytes.getBytesFromFile(path);
+                E = FileBytes.bytesToLong(buffer);
+                byte[] outFile = new byte[E.size()];
+                for (int i = 0; i < E.size(); i++) {
+                    outFile[i] = (byte) PowFast.calculate(E.get(i), getD(), getP());
                 }
-                getFileFromBytes(path, outFile);
-                return null;
+                getFileFromBytes(newPath, outFile);
         }
-        return null;
     }
 }
