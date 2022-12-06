@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.String;
 
 public class FileBytes {
 
@@ -77,5 +78,11 @@ public class FileBytes {
             numsRead.add(inputStream.readLong());
         }
         return numsRead;
+    }
+
+    public static void writeToFileNumStr(String path, long numWrite) throws IOException {
+        FileWriter fileWriter = new FileWriter(path);
+        fileWriter.write(String.valueOf(numWrite));
+        fileWriter.flush();
     }
 }

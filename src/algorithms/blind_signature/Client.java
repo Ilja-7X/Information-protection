@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import java.util.Scanner;
 
 import static functionalfiles.FileBytes.writeToFile;
+import static functionalfiles.FileBytes.writeToFileNumStr;
 
 public class Client {
     private BigInteger C;
@@ -49,6 +50,7 @@ public class Client {
         long S = PowFast.calculate(hash.longValue(), C.longValue(), N.longValue());
         //writeIntSignToFile("blind",(int)S);
         writeToFile("result/blind_signature/sign.txt", S);
+        writeToFileNumStr("result/blind_signature/nweSign.txt", S);
         return S;
     }
 
