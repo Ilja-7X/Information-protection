@@ -56,4 +56,6 @@ public class RSADigitalSign {
     public long getD() {
         return D;
     }
+
+    public long getC() { return C; }
 }
