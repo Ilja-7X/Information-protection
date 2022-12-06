@@ -49,8 +49,7 @@ public class Client {
     public long getSignBulletin(BigInteger hash) throws IOException {
         long S = PowFast.calculate(hash.longValue(), C.longValue(), N.longValue());
         //writeIntSignToFile("blind",(int)S);
-        writeToFile("result/blind_signature/sign.txt", S);
-        writeToFileNumStr("result/blind_signature/nweSign.txt", S);
+        writeToFileNumStr("result/blind_signature/sign.txt", S);
         return S;
     }
 
