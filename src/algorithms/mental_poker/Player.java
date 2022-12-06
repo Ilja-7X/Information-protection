@@ -59,7 +59,7 @@ public class Player {
         System.out.println("\tPlayer "+name+": key = "+getD());
         for (int i = 0; i < cards.size(); i++) {
             this.cards[i] = chargedDeck.deckInterpreter(chargedDeck.deck, cards.get(i));
-            System.out.print(" < "+this.cards[i]+" >");
+            System.out.print(" ["+this.cards[i]+"]");
         }
         System.out.println("\n");
     }

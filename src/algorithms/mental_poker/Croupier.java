@@ -31,7 +31,7 @@ public class Croupier {
         System.out.println("\t\tTable Deck ");
         for (int i = 0; i < cards.size(); i++) {
             this.buyIn[i] = chargedDeck.deckInterpreter(chargedDeck.deck, cards.get(i));
-            System.out.println(" < "+this.buyIn[i]+" >");
+            System.out.println(" ["+this.buyIn[i]+"]");
         }
         System.out.println("\n");
     }
