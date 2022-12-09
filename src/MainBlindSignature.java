@@ -14,14 +14,15 @@ public class MainBlindSignature {
             long ClientSignature;
             Bulletin bulletin = Commission.askQuestion("Is the earth round?");
 
-            Client Valera = new Client(bulletin);
-            System.out.println("Answer = "+Valera.answerQuestion());
-            hash = Valera.HashOfAnswer();
-            ClientSignature = Valera.getSignBulletin(hash);
+            Client client = new Client(bulletin);
+            Server server = new Server();
+
+            System.out.println("Answer = "+client.answerQuestion());
+            hash = client.HashOfAnswer(server.getN());
+            ClientSignature = server.getSignBulletin(hash);
             System.out.println("Client signature = "+ClientSignature);
 
-            Server server = new Server();
-            System.out.println(server.checkSignature(hash, ClientSignature, Valera.getD(), Valera.getN()));
+            System.out.println(server.checkSignature(hash, ClientSignature));
         }
         catch (IOException ex)
         {
