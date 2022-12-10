@@ -21,6 +21,8 @@ public class Server {
         System.out.println("C = "+rsa.getC()+" D = "+rsa.getD()+" N = "+rsa.getN());
     }
 
+    
+
     public long getSignBulletin(BigInteger hash) throws IOException {
         long S = PowFast.calculate(hash.longValue(), C.longValue(), N.longValue());
         //writeIntSignToFile("blind",(int)S);

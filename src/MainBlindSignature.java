@@ -17,6 +17,11 @@ public class MainBlindSignature {
             Client client = new Client(bulletin);
             Server server = new Server();
 
+            //BigInteger N = server.getN();
+
+            //client.generateBlindingFactor(N.longValue());
+            client.generateBlindingFactor(server.getN().longValue());
+
             System.out.println("Answer = "+client.answerQuestion());
             hash = client.HashOfAnswer(server.getN());
             ClientSignature = server.getSignBulletin(hash);

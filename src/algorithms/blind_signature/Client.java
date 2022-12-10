@@ -1,17 +1,30 @@
 package algorithms.blind_signature;
 
+import algorithms.cryptosys_public_key.Euclid;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.security.SecureRandom;
 import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Client {
-    private BigInteger r;
+    private long r;
     private final Bulletin bulletin;
     private String message;
 
     public Client(Bulletin bulletin) {
         this.bulletin = bulletin;
+    }
+
+    public void generateBlindingFactor(long N)
+    {
+        SecureRandom sr = new SecureRandom();
+        long[] EuclidResult;
+            do {
+                this.r = sr.nextInt((int)N-3)+2;
+                EuclidResult =  Euclid.calculate(r, N);
+            } while(EuclidResult[0] != 1);
+            System.out.println("r = " + r);
     }
 
     public String answerQuestion() {
