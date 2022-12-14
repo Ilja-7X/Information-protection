@@ -5,7 +5,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.math.BigInteger;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.function.BiFunction;
 
 public class ClientFSP {
     private BigInteger S;
@@ -13,19 +12,28 @@ public class ClientFSP {
     private BigInteger R;
     private BigInteger N;
 
+    private String Login;
+
     public ClientFSP(BigInteger N)
     {
         this.N = N;
         //this.S = nextRandomBigInteger(this.N.subtract(BigInteger.valueOf(1)));
-        this.S = identification();
+        this.Login = entryLogin();
+        this.S = entryPassword();
         //this.V = S.pow(2).mod(this.N);
         this.V = S.modPow(BigInteger.valueOf(2), this.N);
     }
 
-    public BigInteger identification()
+    private String entryLogin()
     {
-            System.out.println("-----------------------------------------------------------------");
-            System.out.println("Введите пароль: ");
+        System.out.println("Enter your username: ");
+        Scanner scanner = new Scanner(System.in);
+        return new String(scanner.nextLine());
+    }
+
+    private BigInteger entryPassword()
+    {
+            System.out.println("Enter the password: ");
             Scanner scanner = new Scanner(System.in);
             String password;
             password = scanner.nextLine();
@@ -71,5 +79,9 @@ public class ClientFSP {
     public BigInteger getS()
     {
         return S;
+    }
+
+    public String getLogin() {
+        return Login;
     }
 }
