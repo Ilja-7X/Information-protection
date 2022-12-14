@@ -3,10 +3,17 @@ package algorithms.blind_signature;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Scanner;
+import java.util.Random;
+
+import java.util.function.BiFunction;
 
 public class Client {
     private BigInteger r;
+    private BigInteger m;
+    //private BigInteger r = new BigInteger("12");
+    //private BigInteger m = new BigInteger("31");
     private final Bulletin bulletin;
     private String message;
 
@@ -26,9 +33,44 @@ public class Client {
         return message;
     }
 
-    public BigInteger HashOfAnswer (BigInteger N) {
+    public BigInteger nextRandomBigInteger(BigInteger upperLimit){
+        Random randomSource = new Random();
+        BigInteger randomNumber;
+        do {
+            randomNumber = new BigInteger(upperLimit.bitLength(), randomSource);
+        } while (randomNumber.compareTo(upperLimit) >= 0);
+        return randomNumber;
+    }
+    public void generateBlindingFactor(BigInteger N)
+    {
+        BigInteger result;
+        do {
+            result = nextRandomBigInteger(N);
+        } while (result.gcd(N).longValue() != 1);
+        r = result;
+    }
+
+
+    public void HashOfAnswer (BigInteger N) {
         String checksumMD5 = DigestUtils.md5Hex(message);
         BigInteger hash = new BigInteger(checksumMD5, 16);
-        return hash.mod(new BigInteger(String.valueOf(N)));
+        m = hash.mod(new BigInteger(String.valueOf(N)));
+    }
+
+    public BigInteger applyMultiplier(BigInteger c, BigInteger n) {
+        return m.multiply(r.modPow(c, n)).mod(n);
+    }
+
+    public BigInteger extractSignature(BigInteger t, BigInteger N)
+    {
+        return (t.multiply(r.modPow(BigInteger.ONE.negate(), N))).mod(N);
+    }
+
+    public BigInteger getR() {
+        return r;
+    }
+
+    public BigInteger getM() {
+        return m;
     }
 }

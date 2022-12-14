@@ -18,7 +18,15 @@ public class Server {
         C = new BigInteger(String.valueOf(rsa.getC()));
         D = new BigInteger(String.valueOf(rsa.getD()));
         N = new BigInteger(String.valueOf(rsa.getN()));
+        /*C = new BigInteger("37");
+        D = new BigInteger("13");
+        N = new BigInteger("77");*/
         System.out.println("C = "+rsa.getC()+" D = "+rsa.getD()+" N = "+rsa.getN());
+    }
+
+    public BigInteger getSign(BigInteger t)
+    {
+        return t.modPow(D,N);
     }
 
     public long getSignBulletin(BigInteger hash) throws IOException {
@@ -28,16 +36,12 @@ public class Server {
         return S;
     }
 
-    public boolean checkSignature(BigInteger hash, long S) {
-        long w = PowFast.calculate(S, D.longValue(), N.longValue());
-
-        System.out.println("message hash = "+hash+" w hash = "+w);
-
-        return w == hash.longValue();
-    }
-
     public BigInteger getD() {
         return D;
+    }
+
+    public BigInteger getC() {
+        return C;
     }
 
     public BigInteger getN() {
