@@ -20,17 +20,17 @@ public class MainFiatShamirProtocol {
         System.out.println("V = " + client.getV());
 
 
-        for(int i = 0; i < server.getNumIteration(); i++)
-        {
+        //for(int i = 0; i < server.getNumIteration(); i++)
+        //{
             System.out.println("---------------");
             x = client.calculateX();
-            //System.out.println("Generate R = " + client.getR());
-            //System.out.println("x = " + x);
+            System.out.println("Generate R = " + client.getR());
+            System.out.println("x = " + x);
             int c = server.generateBit();
             System.out.println("c = " + c);
             y = client.calculateY(c);
-            //System.out.println("y = " + y);
+            System.out.println("y = " + y);
             System.out.println(server.verify(x, y, client.getV()));
-        }
+        //}
     }
 }

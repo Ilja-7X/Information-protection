@@ -51,14 +51,15 @@ public class ClientFSP {
     }
     public BigInteger calculateX()
     {
-        R = nextRandomBigInteger(N.subtract(BigInteger.valueOf(1)));
+        //R = nextRandomBigInteger(N.subtract(BigInteger.valueOf(1)));
+        R = BigInteger.valueOf(21955553);
         BigInteger X = R.modPow(BigInteger.valueOf(2), N);
         return X;
     }
 
     public BigInteger calculateY(int bit)
     {
-        BigInteger y = R.multiply(S.modPow(BigInteger.valueOf(bit), N)).mod(N);
+        BigInteger y = R.multiply(S.pow(bit)).mod(N);
         return y;
     }
 
