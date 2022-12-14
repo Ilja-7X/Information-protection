@@ -15,22 +15,17 @@ public class MainFiatShamirProtocol {
         BigInteger x;
         BigInteger y;
 
-        System.out.println("N = " + server.getN());
-        System.out.println("S = " + client.getS());
+        //System.out.println("N = " + server.getN());
+        //System.out.println("S = " + client.getS());
         System.out.println("V = " + client.getV());
 
 
-        //for(int i = 0; i < server.getNumIteration(); i++)
-        //{
-            System.out.println("---------------");
+        for(int i = 0; i < server.getNumIteration(); i++)
+        {
             x = client.calculateX();
-            System.out.println("Generate R = " + client.getR());
-            System.out.println("x = " + x);
             int c = server.generateBit();
-            System.out.println("c = " + c);
             y = client.calculateY(c);
-            System.out.println("y = " + y);
             System.out.println(server.verify(x, y, client.getV()));
-        //}
+        }
     }
 }

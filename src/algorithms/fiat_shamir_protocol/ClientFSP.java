@@ -20,10 +20,6 @@ public class ClientFSP {
         this.S = identification();
         //this.V = S.pow(2).mod(this.N);
         this.V = S.modPow(BigInteger.valueOf(2), this.N);
-
-        //System.out.println("Client N = " + this.N);
-        //System.out.println("Client S = " + S);
-        //System.out.println("Client V = " + V);
     }
 
     public BigInteger identification()
@@ -33,11 +29,11 @@ public class ClientFSP {
             Scanner scanner = new Scanner(System.in);
             String password;
             password = scanner.nextLine();
-            System.out.println(password);
+            //System.out.println(password);
             String checkSumMD5 = DigestUtils.md5Hex(password);
             BigInteger hash = new BigInteger(checkSumMD5, 16);
-            System.out.println("Hash: " + hash);
-            System.out.println("Hash2 = " + hash.mod(N));
+            //System.out.println("Hash: " + hash);
+            //System.out.println("Hash2 = " + hash.mod(N));
             return hash.mod(N);
     }
 
@@ -51,8 +47,8 @@ public class ClientFSP {
     }
     public BigInteger calculateX()
     {
-        //R = nextRandomBigInteger(N.subtract(BigInteger.valueOf(1)));
-        R = BigInteger.valueOf(21955553);
+        R = nextRandomBigInteger(N.subtract(BigInteger.valueOf(1)));
+        //R = BigInteger.valueOf(21955553);
         BigInteger X = R.modPow(BigInteger.valueOf(2), N);
         return X;
     }
