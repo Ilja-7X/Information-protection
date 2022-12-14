@@ -7,20 +7,18 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class ClientFSP {
-    private BigInteger S;
-    private BigInteger V;
+    private final BigInteger S;
+    private final BigInteger V;
     private BigInteger R;
-    private BigInteger N;
+    private final BigInteger N;
 
-    private String Login;
+    private final String Login;
 
     public ClientFSP(BigInteger N)
     {
         this.N = N;
-        //this.S = nextRandomBigInteger(this.N.subtract(BigInteger.valueOf(1)));
         this.Login = entryLogin();
         this.S = entryPassword();
-        //this.V = S.pow(2).mod(this.N);
         this.V = S.modPow(BigInteger.valueOf(2), this.N);
     }
 
@@ -28,7 +26,7 @@ public class ClientFSP {
     {
         System.out.println("Enter your username: ");
         Scanner scanner = new Scanner(System.in);
-        return new String(scanner.nextLine());
+        return scanner.nextLine();
     }
 
     private BigInteger entryPassword()
@@ -37,11 +35,8 @@ public class ClientFSP {
             Scanner scanner = new Scanner(System.in);
             String password;
             password = scanner.nextLine();
-            //System.out.println(password);
             String checkSumMD5 = DigestUtils.md5Hex(password);
             BigInteger hash = new BigInteger(checkSumMD5, 16);
-            //System.out.println("Hash: " + hash);
-            //System.out.println("Hash2 = " + hash.mod(N));
             return hash.mod(N);
     }
 
@@ -56,29 +51,12 @@ public class ClientFSP {
     public BigInteger calculateX()
     {
         R = nextRandomBigInteger(N.subtract(BigInteger.valueOf(1)));
-        //R = BigInteger.valueOf(21955553);
-        BigInteger X = R.modPow(BigInteger.valueOf(2), N);
-        return X;
+        return R.modPow(BigInteger.valueOf(2), N);
     }
 
     public BigInteger calculateY(int bit)
     {
-        BigInteger y = R.multiply(S.pow(bit)).mod(N);
-        return y;
-    }
-
-    public BigInteger getV()
-    {
-        return V;
-    }
-
-    public BigInteger getR()
-    {
-        return R;
-    }
-    public BigInteger getS()
-    {
-        return S;
+        return R.multiply(S.pow(bit)).mod(N);
     }
 
     public String getLogin() {
