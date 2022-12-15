@@ -4,6 +4,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -15,10 +16,25 @@ public class Client {
     //private BigInteger r = new BigInteger("12");
     //private BigInteger m = new BigInteger("31");
     private final Bulletin bulletin;
+    private BigInteger hashName;
     private String message;
 
     public Client(Bulletin bulletin) {
         this.bulletin = bulletin;
+        hashName = calculateHashName();
+    }
+
+    private String entryLogin()
+    {
+        System.out.println("Enter your name: ");
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
+
+    private BigInteger calculateHashName(){
+        String name = entryLogin();
+        String checkSumMD5 = DigestUtils.md5Hex(name);
+        return new BigInteger(checkSumMD5, 16);
     }
 
     public String answerQuestion() {
@@ -72,5 +88,9 @@ public class Client {
 
     public BigInteger getM() {
         return m;
+    }
+
+    public BigInteger getHashName() {
+        return hashName;
     }
 }
