@@ -12,9 +12,10 @@ public class MainBlindSignature {
             long ClientSignature;
             Bulletin bulletin = Commission.askQuestion("Is the earth round?");
 
+            Server server = new Server();
+
             for(int i = 0; i < 4; i++) {
                     Client client = new Client(bulletin);
-                    Server server = new Server();
 
                     System.out.println("Answer = " + client.answerQuestion());
                     client.HashOfAnswer(server.getN());
@@ -27,8 +28,7 @@ public class MainBlindSignature {
                     BigInteger t2 = server.getSign(t);
                     System.out.println("t` = " + t2);
                     BigInteger num = client.extractSignature(t2, server.getN());
-                    System.out.println("num = " + num);
-                    System.out.println("HashName = " + client.getHashName());
+                    System.out.println("s = " + num);
                     System.out.println(server.checkRepeatability(client.getHashName(), num) ? "Вы уже голосовали!" : "Ваш ответ принят!");
             }
     }
