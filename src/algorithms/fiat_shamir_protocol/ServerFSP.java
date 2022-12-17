@@ -10,7 +10,7 @@ import java.util.Map;
 public class ServerFSP {
     private final BigInteger N;
     private int C;
-    private int numIteration = 10;
+    private int numIteration = 30;
 
     private BigInteger V_client;
     private Map<String, BigInteger> Database;
@@ -40,6 +40,7 @@ public class ServerFSP {
         return map;
     }
 
+    //Проверка логина пользователя в базе данных
     public boolean authenticate(String login){
         if(Database.containsKey(login)) {
             V_client  = Database.get(login);
@@ -48,11 +49,12 @@ public class ServerFSP {
         return false;
     }
 
-
+    //Генерация сервером числа в диапазоне [0;1]
     public int generateBit() {
         return C = (int) (Math.random() * 2);
     }
 
+    //Проверка на равенство у^2 = x*v^e (%N)
     public boolean verify(BigInteger x, BigInteger y) {
         return y.modPow(BigInteger.valueOf(2), N).compareTo(x.multiply(V_client.pow(C)).mod(N)) == 0;
     }

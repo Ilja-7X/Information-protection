@@ -22,6 +22,7 @@ public class ClientFSP {
         this.V = S.modPow(BigInteger.valueOf(2), this.N);
     }
 
+    // Ввод логина пользователем
     private String entryLogin()
     {
         System.out.println("Enter your username: ");
@@ -29,6 +30,7 @@ public class ClientFSP {
         return scanner.nextLine();
     }
 
+    //Ввод пароля пользователем
     private BigInteger entryPassword()
     {
             System.out.println("Enter the password: ");
@@ -40,6 +42,7 @@ public class ClientFSP {
             return hash.mod(N);
     }
 
+    //Генерация числа в диапазоне (0;upperLimit)
     public BigInteger nextRandomBigInteger(BigInteger upperLimit){
         Random randomSource = new Random();
         BigInteger randomNumber;
@@ -48,12 +51,15 @@ public class ClientFSP {
         } while (randomNumber.compareTo(upperLimit) >= 0);
         return randomNumber;
     }
+
+    //Генерация R и вычисление x = r^2%N
     public BigInteger calculateX()
     {
         R = nextRandomBigInteger(N.subtract(BigInteger.valueOf(1)));
         return R.modPow(BigInteger.valueOf(2), N);
     }
 
+    //Вычисление y = R*s^e
     public BigInteger calculateY(int bit)
     {
         return R.multiply(S.pow(bit)).mod(N);
